@@ -12,9 +12,8 @@
 */
 
 Route::get('/', ['uses' => 'back\IndexController@index']);
-Route::get('/login', ['uses' => 'front\IndexController@index']);
-Route::get('/register', ['uses' => 'front\IndexController@register']);
-Route::post('/register', ['uses' => 'front\IndexController@register']);
+Route::any('/login', ['uses' => 'front\IndexController@index']);
+Route::any('/register', ['uses' => 'front\IndexController@register']);
 
 /*
 |--------------------------------------------------------------------------

@@ -8,6 +8,7 @@ class User extends Authenticatable
 {
     const ROLE_ADMIN = 'ADMIN';
     const ROLE_USER = 'USER';
+    const STATUS_NEW = 'NEW';
     /**
      * The attributes that are mass assignable.
      *
@@ -26,10 +27,25 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    public function register($firstname, $lastname, $email, $password,$role,$status){
-        DB::table('users')->insert([
-            ['firstname' => $firstname,'lastname' => $lastname,'email' => $email, 'password' => $password,'role' => $role, 'status' => $status],
-
-        ]);
+    public static function  _save($request, $id = false){
+        if ($id) {
+            $user = self::find($id);
+        } else {
+            $user = new User();
+        }
+        if ($request->password) {
+            $user->salt = uniqid(rand(), true);
+            $user->password = bcrypt($request->password . $user->salt);
+        }
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->email = $request->email;
+        $user->role = User::ROLE_USER;
+        $user->status = User::STATUS_NEW;
+        return $user->save();
     }
+    public static function getSaltByEmail($email){
+        return self::where('email', $email)->value('salt');
+    }
+
 }
