@@ -11,16 +11,16 @@ use Illuminate\Support\Facades\Validator;
 class IndexController extends Controller
 {
     public function index(){
-
+        
         return view('front.login');
     }
     public function register(Request $request){
         if($request->isMethod('post')){
             $rules = [
                 "firstname" => "required" ,
-                "lastname" => "required" ,
-                "email" => "required|email|unique:users",
-                "password" => "required|confirmed|min:6|max:20",
+                "lastname"  => "required" ,
+                "email"     => "required|email|unique:users",
+                "password"  => "required|confirmed|min:6|max:20",
             ];
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
