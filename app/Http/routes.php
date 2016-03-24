@@ -38,9 +38,36 @@ Route::group([
             'uses' => "CategorieController@addEdit",
             'as'   => 'admin.categorie.create'
         ]);   
+        Route::any('categorie/anyData', [
+            'uses' => "CategorieController@anyData",
+            'as'   => 'admin.categorie.create'
+        ]);   
         Route::get('categorie/delete/{id}', ['uses' => "CategorieController@delete"]);
+
+        // user 
+            /*UserController*/
+            Route::get('/user', [
+                'uses' => "UserController@index",
+                'as'   => 'admin.user.index'
+            ]);
+            /*UserController  Edit*/
+            Route::any('user/edit/{id}', [
+                'uses' => "UserController@addEdit",
+                'as'   => 'admin.user.edit'
+            ]);       
+            /*UserController create */
+            Route::any('user/create', [
+                'uses' => "UserController@addEdit",
+                'as'   => 'admin.user.create'
+            ]);   
+            Route::any('user/anyData', [
+                'uses' => "UserController@anyData",
+                'as'   => 'admin.user.create'
+            ]);   
+        // end user
+        Route::get('user/delete/{id}', ['uses' => "UserController@delete"]);
     });
-    
+
 });
 
 Route::get('/', ['uses' => 'front\IndexController@index']);
