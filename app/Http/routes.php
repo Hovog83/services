@@ -11,6 +11,38 @@
 |
 */
 
+
+
+Route::group([
+    'namespace' => 'back',
+    'prefix'    => 'admin'
+], function () {
+    Route::group(['middleware' => ['web','admin']], function () {
+        /*IndexController*/
+        Route::get('/', [
+            'uses' => "IndexController@index",
+            'as'   => 'admin.index.index'
+        ]);        
+        /*CategorieController*/
+        Route::get('/categorie', [
+            'uses' => "CategorieController@index",
+            'as'   => 'admin.categorie.index'
+        ]);
+        /*CategorieController  Edit*/
+        Route::any('categorie/edit/{id}', [
+            'uses' => "CategorieController@addEdit",
+            'as'   => 'admin.categorie.edit'
+        ]);       
+        /*CategorieController create */
+        Route::any('categorie/create', [
+            'uses' => "CategorieController@addEdit",
+            'as'   => 'admin.categorie.create'
+        ]);   
+        Route::get('categorie/delete/{id}', ['uses' => "CategorieController@delete"]);
+    });
+    
+});
+
 Route::get('/', ['uses' => 'front\IndexController@index']);
 Route::group([
     'namespace' => 'front',
@@ -20,14 +52,9 @@ Route::group([
     Route::any('/login/active/{token}', ['uses' => 'UserController@activeLogin']);
     Route::any('/user/account', ['uses' => 'UserController@userAccount']);
     Route::any('/verify', ['uses' => 'UserController@verify']);
-
     //AuthController
-
-
 });
-Route::group(['namespace' => 'back'], function () {
-    Route::any('/admin', ['uses' => 'IndexController@index']);
-});
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes

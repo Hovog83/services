@@ -39,12 +39,7 @@ class Admin
             } else {
                 return redirect()->guest('/');
             }
-        } else {
-            if (User::ROLE_ADMIN != $this->auth->user()->role) {
-                return redirect('admin/auth');
-            }
         }
-
         return $next($request);
     }
 }

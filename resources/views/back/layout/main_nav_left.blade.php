@@ -11,7 +11,7 @@
             <li class="">
                 <a href="#" title="User"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">User</span></a>
                 <ul>
-                    <li class="">
+                    <li class="{{ Menu::isActive('admin.index.index') }}">
                         <a href="/admin/user" title="List"><span class="menu-item-parent">List</span></a>
                     </li>
 
@@ -20,7 +20,7 @@
             <li class="">
                 <a href="#" title="User"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">Categorie</span></a>
                 <ul>
-                    <li class="">
+                    <li class="{{ Menu::isActive('admin.categorie.index') }}">
                         <a href="/admin/categorie/" title="List"><span class="menu-item-parent">List</span></a>
                     </li>
                     <li class="">

@@ -15,9 +15,6 @@ class CategorieController extends Controller{
         return view('back.categorie.index',$data);
     }
 
-
-
-
     public function addEdit(Request $request, $id = false) {
     	if(!$id){
 	    	$categories = new Categorie();
@@ -28,13 +25,13 @@ class CategorieController extends Controller{
           $validator = Validator::make($request->all(),Categorie::rules());
 	        if ($validator->fails()) {
 	            return redirect('admin/categorie/create')
-	                        ->withErrors($validator,'addEdit')
-	                        ->withInput();
+	                       ->withErrors($validator,'addEdit')
+	                       ->withInput();
 	        }else{
-            	 $categories->name = $request->name;
-            	 $categories->icone = $request->icone;
-            	 $categories->order = $request->order;
-            	 $categories->status = $request->status;
+                 $categories->name   = $request->name;
+                 $categories->icone  = $request->icone;
+                 $categories->order  = $request->order;
+                 $categories->status = $request->status;
          	  	 $categories->save();
 	        }
 	        return redirect('admin/categorie');
@@ -43,7 +40,6 @@ class CategorieController extends Controller{
     }
     public function delete ($id) {
         Categorie::find($id)->delete();
-        echo $id;
-        return redirect('admin/categorie');
+         return redirect('admin/categorie');
     }
 }
