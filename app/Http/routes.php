@@ -11,10 +11,23 @@
 |
 */
 
-Route::get('/', ['uses' => 'back\IndexController@index']);
-Route::any('/login', ['uses' => 'front\IndexController@index']);
-Route::any('/register', ['uses' => 'front\IndexController@register']);
+Route::get('/', ['uses' => 'front\IndexController@index']);
+Route::group([
+    'namespace' => 'front',
+    'middleware' => 'web'
+], function () {
+    Route::any('/auth', ['uses' => 'UserController@auth']);
+    Route::any('/login/active/{token}', ['uses' => 'UserController@activeLogin']);
+    Route::any('/user/account', ['uses' => 'UserController@userAccount']);
+    Route::any('/verify', ['uses' => 'UserController@verify']);
 
+    //AuthController
+
+
+});
+Route::group(['namespace' => 'back'], function () {
+    Route::any('/admin', ['uses' => 'IndexController@index']);
+});
 /*
 |--------------------------------------------------------------------------
 | Application Routes

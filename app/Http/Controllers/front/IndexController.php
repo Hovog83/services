@@ -12,7 +12,7 @@ class IndexController extends Controller
 {
     public function index(){
 
-        return view('front.login');
+        return view('front.index');
     }
     public function register(Request $request){
         if($request->isMethod('post')){
@@ -37,17 +37,16 @@ class IndexController extends Controller
         }
         return view('front.register');
     }
-    public function login(Request $request){
+   /* public function login(Request $request){
         $salt        = User::getSaltByEmail($request->email);
         $credentials = [
+            'role'     => User::ROLE_USER,
             'email'    => $request->email,
             'password' => $request->password . $salt
         ];
         if (Auth::attempt($credentials, true)) {
-            User::noteUserLogin(Auth::user());
-
-            return redirect('userAccount');
+            return redirect('back/admin');
         }
-    }
+    }*/
 }
 
