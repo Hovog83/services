@@ -11,6 +11,65 @@
 |
 */
 
+
+
+Route::group([
+    'namespace' => 'back',
+    'prefix'    => 'admin'
+], function () {
+    Route::group(['middleware' => ['web','admin']], function () {
+        /*IndexController*/
+        Route::get('/', [
+            'uses' => "IndexController@index",
+            'as'   => 'admin.index.index'
+        ]);        
+        /*CategorieController*/
+        Route::get('/categorie', [
+            'uses' => "CategorieController@index",
+            'as'   => 'admin.categorie.index'
+        ]);
+        /*CategorieController  Edit*/
+        Route::any('categorie/edit/{id}', [
+            'uses' => "CategorieController@addEdit",
+            'as'   => 'admin.categorie.edit'
+        ]);       
+        /*CategorieController create */
+        Route::any('categorie/create', [
+            'uses' => "CategorieController@addEdit",
+            'as'   => 'admin.categorie.create'
+        ]);   
+        Route::any('categorie/anyData', [
+            'uses' => "CategorieController@anyData",
+            'as'   => 'admin.categorie.create'
+        ]);   
+        Route::get('categorie/delete/{id}', ['uses' => "CategorieController@delete"]);
+
+        // user 
+            /*UserController*/
+            Route::get('/user', [
+                'uses' => "UserController@index",
+                'as'   => 'admin.user.index'
+            ]);
+            /*UserController  Edit*/
+            Route::any('user/edit/{id}', [
+                'uses' => "UserController@addEdit",
+                'as'   => 'admin.user.edit'
+            ]);       
+            /*UserController create */
+            Route::any('user/create', [
+                'uses' => "UserController@addEdit",
+                'as'   => 'admin.user.create'
+            ]);   
+            Route::any('user/anyData', [
+                'uses' => "UserController@anyData",
+                'as'   => 'admin.user.create'
+            ]);   
+        // end user
+        Route::get('user/delete/{id}', ['uses' => "UserController@delete"]);
+    });
+
+});
+
 Route::get('/', ['uses' => 'front\IndexController@index']);
 Route::group([
     'namespace' => 'front',
@@ -23,7 +82,6 @@ Route::group([
     Route::any('/logout', ['uses' => 'UserController@logout']);
     Route::any('/user/reset', ['uses' => 'UserController@logout']);
     Route::any('/password/reset/{token}', ['uses' => 'UserController@changePassword']);
-
 });
 Route::group([
     'namespace' => 'back',

@@ -7,43 +7,50 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
+use Yajra\Datatables\Datatables;
 class CategorieController extends Controller{
-
     public function index(){
-        $categories = Categorie::paginate(15);
-    	$data = array('categories' => $categories);
-        return view('back.categorie.index',$data);
+        return view('back.categorie.index');
     }
-
-
-
-
     public function addEdit(Request $request, $id = false) {
     	if(!$id){
 	    	$categories = new Categorie();
+            $url = 'admin/categorie/create';
     	}else{
     		$categories = Categorie::find($id);
+            $url = 'admin/categorie/edit/'.$id;
     	}
         if ($request->isMethod('post')) {
           $validator = Validator::make($request->all(),Categorie::rules());
 	        if ($validator->fails()) {
-	            return redirect('admin/categorie/create')
-	                        ->withErrors($validator,'addEdit')
-	                        ->withInput();
+	            return redirect($url)
+	                       ->withErrors($validator,'addEdit')
+	                       ->withInput();
 	        }else{
-            	 $categories->name = $request->name;
-            	 $categories->icone = $request->icone;
-            	 $categories->order = $request->order;
-            	 $categories->status = $request->status;
+                 $categories->name   = $request->name;
+                 $categories->icone  = $request->icone;
+                 $categories->order  = $request->order;
+                 $categories->status = $request->status;
          	  	 $categories->save();
 	        }
 	        return redirect('admin/categorie');
         }
         return view('back.categorie.addEdit',["categories"=>$categories]);
     }
-    public function delete ($id) {
+    public function delete($id) {
         Categorie::find($id)->delete();
-        echo $id;
-        return redirect('admin/categorie');
+         return redirect('admin/categorie');
+    }
+    /**
+     * Process datatables ajax request.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function anyData(){
+        return Datatables::of(Categorie::select('*'))
+        ->addColumn('action', function ($cat) {
+                     return '<a href="/admin/categorie/edit/'.$cat->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a><a href="/admin/categorie/delete/'.$cat->id.'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> delete</a>';
+                 })->editColumn('id', 'ID: {{$id}}')
+        ->make(true);
     }
 }

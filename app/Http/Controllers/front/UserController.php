@@ -15,7 +15,7 @@ class UserController extends Controller
     public function auth(Request $request){
         if($request->isMethod('post')){
             $rules = [
-                "email" => "required|email",
+                "email"    => "required|email",
                 "password" => "required|min:6|max:20",
             ];
             $validator = Validator::make($request->all(), $rules);

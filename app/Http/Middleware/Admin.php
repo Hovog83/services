@@ -37,7 +37,6 @@ class Admin
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                die('ttttt');
                 return redirect()->guest('/');
             }
         } else {
@@ -45,7 +44,6 @@ class Admin
                 return redirect('user');
             }
         }
-
         return $next($request);
     }
 }

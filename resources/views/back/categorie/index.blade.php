@@ -51,41 +51,17 @@
                         <div class="col-xs-12">
                             <a href="/admin/categorie/create" class="btn btn-primary" >Create</a>
                         </div>
-                            <table id="datatable_col_reorder" class="table table-striped table-bordered table-hover"
-                                   width="100%">
+                            <table id="datatable_cat" class="table table-striped table-bordered table-hover">
                                 <thead>
-                                <tr>
-                                    <th data-hide="phone">name</th>
-                                    <th data-hide="phone">status</th>
-                                    <th data-hide="phone">icone</th>
-                                    <th data-hide="phone">order</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($categories as $value)
                                     <tr>
-                                        <td>{{ $value->name }}</td>
-                                        <td>{{ $value->status }}</td>
-                                        <td>{{ $value->icone }}</td>
-                                        <td>{{ $value->order }}</td>
-                                        <td>
-                                            <ul class="demo-btns">
-                                                <li>
-                                                    <a href="/admin/categorie/edit/{{ $value->id }}" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i>
-                                                        Edit</a>
-                                                </li>
-                                                <li>
-                                                    <a href="/admin/categorie/delete/{{ $value->id }}" class="btn btn-xs btn-danger"><i class="fa fa-remove"></i>
-                                                        Delete</a>
-                                                </li>
-                                            </ul>
-                                        </td>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Icone</th>
+                                        <th>Order</th>
+                                        <th>Actions</th>
                                     </tr>
-                                @endforeach
-                                </tbody>
+                                </thead>
                             </table>
-                            {{ $categories->links() }}
                         </div>
                         <!-- end widget content -->
 
@@ -117,7 +93,22 @@
         $(document).ready(function () {
 
             pageSetUp();
-
+            $('#datatable_cat').dataTable({
+                processing: true,
+                serverSide: true,
+                ajax: 'http://service.dev/admin/categorie/anyData',
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' l C>r>" +
+                "t" +
+                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                "autoWidth": true,
+                columns: [
+                    { data: 'name', name: 'name' },
+                    { data: 'status', name: 'status' },
+                    { data: 'icone', name: 'icone' },
+                    { data: 'order', name: 'order' },
+                    {data: 'action', name: 'action', orderable: false, searchable: false}
+                ]
+            });
             /* // DOM Position key index //
 
              l - Length changing (dropdown)

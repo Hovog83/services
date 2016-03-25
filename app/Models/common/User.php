@@ -21,6 +21,19 @@ class User extends Authenticatable
         'firstname','lastname', 'email', 'password','role','status'
     ];
 
+    public static function rules()
+    {
+        return [
+                'firstname'    => 'required|max:50|min:2',
+                'lastname'     => 'required|max:30',
+                'email'        => 'required',
+                'role'         => 'required',
+                'status'       => 'required',
+                'address'      => 'required',
+                'home_phone'   => 'required|integer',
+                'mobile_phone' => 'required|integer'
+        ];
+    }
     /**
      * The attributes that should be hidden for arrays.
      *
