@@ -76,12 +76,19 @@ Route::group([
     'middleware' => 'web'
 ], function () {
     Route::any('/auth', ['uses' => 'UserController@auth']);
-    Route::any('/login/active/{token}', ['uses' => 'UserController@activeLogin']);
-    Route::any('/user/account', ['uses' => 'UserController@userAccount']);
-    Route::any('/verify', ['uses' => 'UserController@verify']);
-    //AuthController
+    Route::any('/login/active/{token}', ['uses' => 'UserController@active']);
+    Route::any('/user', ['uses' => 'UserController@userAccount']);
+    Route::any('/reset', ['uses' => 'UserController@reset']);
+    Route::any('/logout', ['uses' => 'UserController@logout']);
+    Route::any('/user/reset', ['uses' => 'UserController@logout']);
+    Route::any('/password/reset/{token}', ['uses' => 'UserController@changePassword']);
 });
-
+Route::group([
+    'namespace' => 'back',
+    'middleware' => ['web','admin'],
+], function () {
+    Route::any('/admin', ['uses' => 'IndexController@index']);
+});
 /*
 |--------------------------------------------------------------------------
 | Application Routes

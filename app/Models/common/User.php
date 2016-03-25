@@ -80,12 +80,28 @@ class User extends Authenticatable
 
     public static function checkToken($token){
 
-        return self::where('remember_token', $token)->first();
+        return self::where('token', $token)->first();
     }
     public static function getUserbyEmail($email){
         return  self::where('email',$email)->first();
     }
     public static function updateStatus($token){
-        return self::where('remember_token', $token)->update(['status' => 'ACTIVE']);
+        return self::where('token', $token)->update(['status' => 'ACTIVE']);
+
+    }
+    public static function deleteActivationToken($token){
+       return self::where('token', $token)->update(['token' => NULL]);
+
+    }
+    public static  function generateToken($request){
+        $token = md5(microtime(true));
+        self::where('email',$request->email)->update(['token' => $token]);
+        return $token;
+    }
+    public static  function resetPassword($request, $token){
+
+            $salt = self::where('token', $token)->value('salt');
+            self::where('token',$token)->update(['password' => bcrypt($request->password . $salt)]);
+
     }
 }
