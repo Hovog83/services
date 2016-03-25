@@ -37,11 +37,12 @@ class Admin
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
+                die('ttttt');
                 return redirect()->guest('/');
             }
         } else {
             if (User::ROLE_ADMIN != $this->auth->user()->role) {
-                return redirect('admin/auth');
+                return redirect('user');
             }
         }
 
