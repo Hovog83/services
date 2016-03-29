@@ -8,17 +8,14 @@
     @section('content')
             <!-- widget grid -->
     <section id="widget-grid" class="">
-
         <!-- row -->
         <div class="row">
-
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-2" data-widget-editbutton="true">
+                <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-8" data-widget-editbutton="true">
                     <!-- widget options:
                     usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="true">
-
                     data-widget-colorbutton="true"
                     data-widget-editbutton="true"
                     data-widget-togglebutton="true"
@@ -27,7 +24,6 @@
                     data-widget-custombutton="true"
                     data-widget-collapsed="true"
                     data-widget-sortable="true"
-
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
@@ -35,14 +31,11 @@
                         <h2>List </h2>
 
                     </header>
-
                     <!-- widget div-->
                     <div>
-
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
-
                         </div>
                         <!-- end widget edit box -->
 
@@ -85,16 +78,14 @@
     <script src="{{asset('assets/back/js/plugin/datatables/dataTables.tableTools.min.js')}}"></script>
     <script src="{{asset('assets/back/js/plugin/datatables/dataTables.bootstrap.min.js')}}"></script>
     <script src="{{asset('assets/back/js/plugin/datatable-responsive/datatables.responsive.min.js')}}"></script>
-
     <script type="text/javascript">
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
         $(document).ready(function () {
             pageSetUp();
-            table = $('#datatable_cat').dataTable({
+            $('#datatable_cat').dataTable({
                 processing: true,
                 serverSide: true,
-                rowId: 'staffId',
-                ajax: 'http://service.dev/admin/categorie/anyData',
+                ajax: 'http://service.dev/admin/subcategory/anyData',
                 "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' l C>r>" +
                 "t" +
                 "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
@@ -102,9 +93,6 @@
                 "fnRowCallback": function(nRow, aData, iDisplayIndex) {
                     nRow.setAttribute('id',aData.id);
                 },
-                // "fnRowCallback": function(nRow, aData, iDisplayIndex) {
-                //     nRow.setAttribute('id',some_variable);
-                // }
                 columns: [
                     { data: 'name', name: 'name' },
                     { data: 'status', name: 'status' },
@@ -114,12 +102,13 @@
                 ]
             });
            /* END COLUMN SHOW - HIDE */
+
                 $('tbody').sortable({
                     stop: function( event, ui ) {
                         var sort_url = $(this).attr('data-url');
                         var json = $( "tbody" ).sortable( "toArray" );
                           $.ajax({
-                            url: '/admin/categorie/sortTable',
+                            url: '/admin/subcategory/sortTable',
                             type: 'GET',
                             data: {sort: json}
                         })

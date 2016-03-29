@@ -47,10 +47,17 @@ class CategorieController extends Controller{
      * @return \Illuminate\Http\JsonResponse
      */
     public function anyData(){
-        return Datatables::of(Categorie::select('*'))
+        return Datatables::of(Categorie::select('*')->orderBy('order'))
         ->addColumn('action', function ($cat) {
                      return '<a href="/admin/categorie/edit/'.$cat->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a><a href="/admin/categorie/delete/'.$cat->id.'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> delete</a>';
-                 })->editColumn('id', 'ID: {{$id}}')
+                 })->editColumn('id', '{{$id}}')
         ->make(true);
+    }
+    public function sortTable(Request $request){
+        if ($request->isMethod('get')) {
+              $sort_array = $request->sort;
+              $Categorie = new Categorie();
+              $Categorie->sortTable($sort_array);
+        }
     }
 }

@@ -4,17 +4,17 @@ namespace App\Models\common;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Categorie extends Model{
+class Pages extends Model{
 
-    protected $table = 'categorie';
+    protected $table = 'pages';
 	
 	public static function rules()
 	{
 		return [
-				'name'   => 'required|max:50|min:2',
-				'icone'  => 'required|max:30',
-				'order'  => 'required|integer',
-				'status' => 'required',
+				'title' => 'required|max:50|min:2',
+				'slug'  => 'required|max:10|unique:pages',
+				'order' => 'required|integer',
+				'html'  => 'required|min:10',
 		];
 	}
 	public function sortTable($sort_array) {
@@ -24,4 +24,5 @@ class Categorie extends Model{
         	$sort->save();
         }
     }
+
 }

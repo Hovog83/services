@@ -42,7 +42,78 @@ Route::group([
             'uses' => "CategorieController@anyData",
             'as'   => 'admin.categorie.create'
         ]);   
+        Route::any('categorie/sortTable', ['uses' => "CategorieController@sortTable"]);
         Route::get('categorie/delete/{id}', ['uses' => "CategorieController@delete"]);
+         // sub cat
+        /*SubcategoryController*/
+            Route::get('/subcategory', [
+                'uses' => "SubcategoryController@index",
+                'as'   => 'admin.subcategory.index'
+            ]);
+            /*SubcategoryController  Edit*/
+            Route::any('subcategory/edit/{id}', [
+                'uses' => "SubcategoryController@addEdit",
+                'as'   => 'admin.subcategory.edit'
+            ]);       
+            /*SubcategoryController create */
+            Route::any('subcategory/create', [
+                'uses' => "SubcategoryController@addEdit",
+                'as'   => 'admin.subcategory.create'
+            ]);   
+            Route::any('subcategory/anyData', [
+                'uses' => "SubcategoryController@anyData",
+                'as'   => 'admin.subcategory.create'
+            ]);   
+            Route::get('subcategory/delete/{id}', ['uses' => "SubcategoryController@delete"]);
+            Route::any('subcategory/sortTable', ['uses' => "SubcategoryController@sortTable"]);
+        // sub catEnD
+
+             // ServiceController 
+            /*ServiceController*/
+                Route::get('/service', [
+                    'uses' => "ServiceController@index",
+                    'as'   => 'admin.service.index'
+                ]);
+                /*ServiceController  Edit*/
+                Route::any('service/edit/{id}', [
+                    'uses' => "ServiceController@addEdit",
+                    'as'   => 'admin.service.edit'
+                ]);       
+                /*ServiceController create */
+                Route::any('service/create', [
+                    'uses' => "ServiceController@addEdit",
+                    'as'   => 'admin.service.create'
+                ]);   
+                Route::any('service/anyData/{type?}', [
+                    'uses' => "ServiceController@anyData",
+                    'as'   => 'admin.service.create'
+                ]);   
+                Route::get('service/delete/{id}', ['uses' => "ServiceController@delete"]);
+                Route::any('service/sortImages', ['uses' => "ServiceController@sortImages"]);
+                Route::any('service/deleteImages/{id}', ['uses' => "ServiceController@deleteImages"]);
+                Route::any('service/setMainImages/{id}/{services}', ['uses' => "ServiceController@setMainImages"]);
+                Route::any('service/getSubCat/{id?}', ['uses' => "ServiceController@getSubCat"]);
+            // ServiceController catEnD
+
+                    Route::any('service/type/{approved}', [
+                        'uses' => "ServiceController@type",
+                        'as'   => 'admin.service.type.typeApproved'
+                    ]);   
+                    Route::any('service/type/{new}', [
+                        'uses' => "ServiceController@type",
+                        'as'   => 'admin.service.type.typeNew'
+                    ]);               
+                    Route::any('service/type/{blocked}', [
+                        'uses' => "ServiceController@type",
+                        'as'   => 'admin.service.type.typeBlocked'
+                    ]);          
+                      
+                    Route::any('service/type/{delete}', [
+                        'uses' => "ServiceController@type",
+                        'as'   => 'admin.service.type.typeDelete'
+                    ]);          
+
+
 
         // user 
             /*UserController*/
@@ -64,8 +135,68 @@ Route::group([
                 'uses' => "UserController@anyData",
                 'as'   => 'admin.user.create'
             ]);   
-        // end user
         Route::get('user/delete/{id}', ['uses' => "UserController@delete"]);
+        // end user
+
+        // menu 
+            /*menuController*/
+            Route::get('/menu', [
+            'uses' => "menuController@index",
+            'as'   => 'admin.menu.index'
+            ]);
+            /*menuController  Edit*/
+            Route::any('menu/edit/{id}', [
+            'uses' => "menuController@addEdit",
+            'as'   => 'admin.menu.edit'
+            ]);       
+            /*menuController create */
+            Route::any('menu/create', [
+            'uses' => "menuController@addEdit",
+            'as'   => 'admin.menu.create'
+            ]);   
+            Route::any('menu/anyData', [
+            'uses' => "menuController@anyData",
+            'as'   => 'admin.menu.create'
+            ]);   
+            Route::get('menu/delete/{id}', ['uses' => "menuController@delete"]);
+
+            Route::get('menu/view/{id}', [
+                'uses' => "MenuPagesController@view",
+                'as'   => 'admin.menu.view'
+            ]);         
+            Route::get('MenuPages/isPageCheckedSave', [
+                'uses' => "MenuPagesController@isPageCheckedSave",
+                'as'   => 'admin.menu.isPageCheckedSave'
+            ]);         
+            Route::get('MenuPages/sortTable', [
+                'uses' => "MenuPagesController@sortTable",
+                'as'   => 'admin.menu.sortTable'
+            ]);
+        // menu EnD
+        // pages 
+        /*PagesController*/
+        Route::get('/pages', [
+        'uses' => "PagesController@index",
+        'as'   => 'admin.pages.index'
+        ]);
+        /*PagesController  Edit*/
+        Route::any('pages/edit/{id}', [
+        'uses' => "PagesController@addEdit",
+        'as'   => 'admin.pages.edit'
+        ]);       
+        /*PagesController create */
+        Route::any('pages/create', [
+        'uses' => "PagesController@addEdit",
+        'as'   => 'admin.pages.create'
+        ]);   
+        Route::any('pages/anyData', [
+        'uses' => "PagesController@anyData",
+        'as'   => 'admin.pages.create'
+        ]);   
+        Route::get('pages/delete/{id}', ['uses' => "PagesController@delete"]);
+        Route::any('pages/sortTable', ['uses' => "PagesController@sortTable"]);
+    // pages EnD
+
     });
 
 });

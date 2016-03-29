@@ -38,8 +38,10 @@ class Menu
     */
     public static function areActive (Array $routes, $output = "active") {
         foreach ($routes as $route) {
+
             if (Route::currentRouteName() == $route) {
-                return $output;
+                return $route;
+                // return $output;
             }
         }
     }

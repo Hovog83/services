@@ -56,8 +56,6 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Status</th>
-                                        <th>Icone</th>
-                                        <th>Order</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -87,44 +85,29 @@
     <script src="{{asset('assets/back/js/plugin/datatable-responsive/datatables.responsive.min.js')}}"></script>
 
     <script type="text/javascript">
+
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
         $(document).ready(function () {
+
             pageSetUp();
-            table = $('#datatable_cat').dataTable({
+
+            
+            $('#datatable_cat').dataTable({
                 processing: true,
                 serverSide: true,
-                rowId: 'staffId',
-                ajax: 'http://service.dev/admin/categorie/anyData',
+                ajax: 'http://service.dev/admin/service/anyData/{{$type}}',
                 "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' l C>r>" +
                 "t" +
                 "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                 "autoWidth": true,
-                "fnRowCallback": function(nRow, aData, iDisplayIndex) {
-                    nRow.setAttribute('id',aData.id);
-                },
-                // "fnRowCallback": function(nRow, aData, iDisplayIndex) {
-                //     nRow.setAttribute('id',some_variable);
-                // }
                 columns: [
-                    { data: 'name', name: 'name' },
+                    { data: 'title', name: 'title' },
                     { data: 'status', name: 'status' },
-                    { data: 'icone', name: 'icone' },
-                    { data: 'order', name: 'order' },
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });
            /* END COLUMN SHOW - HIDE */
-                $('tbody').sortable({
-                    stop: function( event, ui ) {
-                        var sort_url = $(this).attr('data-url');
-                        var json = $( "tbody" ).sortable( "toArray" );
-                          $.ajax({
-                            url: '/admin/categorie/sortTable',
-                            type: 'GET',
-                            data: {sort: json}
-                        })
-                    }
-                });
         })
     </script>
 @stop
