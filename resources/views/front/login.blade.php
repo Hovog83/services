@@ -1,6 +1,5 @@
-@extends('layout.app')
+@extends('front.layout.main')
 @section('content')
-
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -21,11 +20,12 @@
                                 </section>
                             </fieldset>
                         @endif
+                        
                         @if($errors->first('form'))
                             <div class="alert alert-danger" role="alert">
                                 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                 <span class="sr-only">Error:</span>
-                                {{ $errors->first('form') }}
+                                {{ @$errors->first('form') }}
                             </div>
                         @endif
                         <div class="form-group">

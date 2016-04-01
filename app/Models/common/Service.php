@@ -21,9 +21,25 @@ class Service extends Model{
 				'subCat_id'   => 'required|integer',
 		];
 	}
-	public function getServiceImages()
-	{
-		return Image::where('service_id', '=', $this->id)->orderBy('order')->get();
+	public function getServiceImages(){
+	  return Image::where('service_id', '=', $this->id)->orderBy('order')->get();
 	}
+	public function getServiceForCat($catId){
+      return self::where('cat_id', '=', $catId)->orderBy('order')->paginate(20);
+	}	
+	public function getServiceForSubCat($subCatID){
+      return self::where('subCat_id', '=', $subCatID)->orderBy('order')->paginate(20);
+	}
+	public static function getServiceMineImages($id){
+	   $image = Image::where('service_id', '=', $id)->where('mine', '=', "1")->first();
+	   if(empty($image)){
+		   $image = Image::where('service_id', '=', $id)->first();
+	   }
 
+	   if(empty($image)){
+	 	  return $image  = new Image;
+	   }
+	   return $image;
+      // return self::where('subCat_id', '=', $subCatID)->orderBy('order')->get();
+	}
 }

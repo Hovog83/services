@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\back;
 
-use App\Models\Common\pages;
+use App\Models\Common\Pages;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Validator;
+use Illuminate\Support\Facades\Validator;
+use DB;
 use Yajra\Datatables\Datatables;
+use App\Models\Common\Language;
+
 class PagesController extends Controller{
     public function index(){
         return view('back.pages.index');
@@ -19,24 +22,32 @@ class PagesController extends Controller{
     	}else{
     		$pages = Pages::find($id);
             $url = 'admin/pages/edit/'.$id;
+                // 'slug'  => 'required|max:10|unique:pages',
     	}
+        $image_model = DB::table('page_image');
+        $images = $image_model->get();
         if ($request->isMethod('post')) {
           $validator = Validator::make($request->all(),Pages::rules());
-	        if ($validator->fails()) {
-	            return redirect($url)
-	                       ->withErrors($validator,'addEdit')
-	                       ->withInput();
+           if ($validator->fails()) {
+	            return redirect($url)->withErrors($validator,'addEdit')->withInput();
+	        }else{         
+            $title = preg_replace('/[^a-z-0-9?]+/iu', '_', $request->title);
+            $language = array($title => $request->title);
+            Language::insertKey($language,$id);
+            $html = array($title."_html" => $request->html);
+            Language::insertKey($html,$id,"page");
 
-	        }else{
-                 $pages->title = $request->title;
-                 $pages->slug  = $request->slug;
-                 $pages->order = $request->order;
-                 $pages->html  = $request->html;
+                 $pages->title     = $request->title;
+                 $pages->titleCode = $title;
+                 $pages->slug      = $request->slug;
+                 $pages->order     = $request->order;
+                 $pages->html      = $request->html;
          	  	 $pages->save();
+
 	        }
 	        return redirect('admin/pages');
         }
-        return view('back.pages.addEdit',["pages"=>$pages]);
+        return view('back.pages.addEdit',["pages"=>$pages,"images"=>$images]);
     }
     public function delete($id) {
         Pages::find($id)->delete();

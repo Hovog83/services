@@ -11,8 +11,6 @@
 |
 */
 
-
-
 Route::group([
     'namespace' => 'back',
     'prefix'    => 'admin'
@@ -67,7 +65,6 @@ Route::group([
             Route::get('subcategory/delete/{id}', ['uses' => "SubcategoryController@delete"]);
             Route::any('subcategory/sortTable', ['uses' => "SubcategoryController@sortTable"]);
         // sub catEnD
-
              // ServiceController 
             /*ServiceController*/
                 Route::get('/service', [
@@ -113,8 +110,6 @@ Route::group([
                         'as'   => 'admin.service.type.typeDelete'
                     ]);          
 
-
-
         // user 
             /*UserController*/
             Route::get('/user', [
@@ -135,7 +130,7 @@ Route::group([
                 'uses' => "UserController@anyData",
                 'as'   => 'admin.user.create'
             ]);   
-        Route::get('user/delete/{id}', ['uses' => "UserController@delete"]);
+           Route::get('user/delete/{id}', ['uses' => "UserController@delete"]);
         // end user
 
         // menu 
@@ -157,7 +152,8 @@ Route::group([
             Route::any('menu/anyData', [
             'uses' => "menuController@anyData",
             'as'   => 'admin.menu.create'
-            ]);   
+            ]);              
+
             Route::get('menu/delete/{id}', ['uses' => "menuController@delete"]);
 
             Route::get('menu/view/{id}', [
@@ -173,39 +169,63 @@ Route::group([
                 'as'   => 'admin.menu.sortTable'
             ]);
         // menu EnD
-        // pages 
-        /*PagesController*/
-        Route::get('/pages', [
-        'uses' => "PagesController@index",
-        'as'   => 'admin.pages.index'
-        ]);
-        /*PagesController  Edit*/
-        Route::any('pages/edit/{id}', [
-        'uses' => "PagesController@addEdit",
-        'as'   => 'admin.pages.edit'
-        ]);       
-        /*PagesController create */
-        Route::any('pages/create', [
-        'uses' => "PagesController@addEdit",
-        'as'   => 'admin.pages.create'
-        ]);   
-        Route::any('pages/anyData', [
-        'uses' => "PagesController@anyData",
-        'as'   => 'admin.pages.create'
-        ]);   
-        Route::get('pages/delete/{id}', ['uses' => "PagesController@delete"]);
-        Route::any('pages/sortTable', ['uses' => "PagesController@sortTable"]);
-    // pages EnD
+            // pages 
+            /*PagesController*/
+            Route::get('/pages', [
+            'uses' => "PagesController@index",
+            'as'   => 'admin.pages.index'
+            ]);
+            /*PagesController  Edit*/
+            Route::any('pages/edit/{id}', [
+            'uses' => "PagesController@addEdit",
+            'as'   => 'admin.pages.edit'
+            ]);       
+            /*PagesController create */
+            Route::any('pages/create', [
+            'uses' => "PagesController@addEdit",
+            'as'   => 'admin.pages.create'
+            ]);   
+            Route::any('pages/anyData', [
+            'uses' => "PagesController@anyData",
+            'as'   => 'admin.pages.create'
+            ]);   
+            Route::get('pages/delete/{id}', ['uses' => "PagesController@delete"]);
+            Route::any('pages/sortTable', ['uses' => "PagesController@sortTable"]);
+        // pages EnD
 
+          // images
+             Route::any('/images', [
+            'uses' => "ImagesController@add",
+            'as'   => 'admin.images.add'
+            ]);   
+             Route::any('/images/deleteImages/{id}', [
+            'uses' => "ImagesController@deleteImages",
+            'as'   => 'admin.images.deleteImages'
+            ]);   
+        // images EnD
+
+
+             /*LangController*/
+             Route::get('language', [
+                 'uses' => "LanguageController@index",
+                 'as'   => 'admin.lang.list'
+             ]);
+             Route::any('language/edit/{id?}', [
+                 'uses' => "LanguageController@edit",
+                 'as'   => 'admin.lang.edit'
+             ]);
+             Route::get('language/delete/{id}', ['uses' => "LanguageController@delete"]);
     });
-
 });
-
-Route::get('/', ['uses' => 'front\IndexController@index']);
 Route::group([
     'namespace' => 'front',
-    'middleware' => 'web'
-], function () {
+    'middleware' => [
+        'language',
+        'web'
+    ],
+    'prefix' => '{lang?}'
+], function(){
+
     Route::any('/auth', ['uses' => 'UserController@auth']);
     Route::any('/login/active/{token}', ['uses' => 'UserController@active']);
     Route::any('/user', ['uses' => 'UserController@userAccount']);
@@ -213,13 +233,29 @@ Route::group([
     Route::any('/logout', ['uses' => 'UserController@logout']);
     Route::any('/user/reset', ['uses' => 'UserController@logout']);
     Route::any('/password/reset/{token}', ['uses' => 'UserController@changePassword']);
-});
-Route::group([
-    'namespace' => 'back',
-    'middleware' => ['web','admin'],
-], function () {
+    Route::any('/pages/{slug}', [
+            'uses' => 'PagesController@index',
+            'as'   => 'front.page.index'
+        ]);    
+    Route::any('/services/{cat?}/{subCat?}', [
+            'uses' => 'ServicesController@index',
+            'as'   => 'front.page.index'
+        ]);    
+    Route::any('/service/{id?}', [
+            'uses' => 'ServiceController@index',
+            'as'   => 'front.page.index'
+        ]);
+    Route::get('{action}/{a?}',  function($lang){
+        return redirect($lang . '/');
+    });
+    Route::get('/', [
+            'uses' => 'IndexController@index',
+            'as'   => 'front.index'
+        ]);
     Route::any('/admin', ['uses' => 'IndexController@index']);
+
 });
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes

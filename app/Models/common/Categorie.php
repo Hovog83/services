@@ -24,4 +24,10 @@ class Categorie extends Model{
         	$sort->save();
         }
     }
+    public function getCategorieByActiv(){
+      return self::with('getSub')->orderBy('order')->where('status', '=', "ACTIVE")->get();
+    }
+    public function getSub(){
+        return $this->hasMany('App\Models\Common\Subcategory', 'cat_id', 'id');
+    }
 }

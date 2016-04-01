@@ -62,11 +62,12 @@
                             {{ Form::number('order', $pages->order, $attributes = array('class'=>'form-control'))}}
                             {{ $errors->addEdit->first('order') }}
                           </section>                           
-                          <section class="col col-4">
-                              {{ Form::label('html', 'html', array('class' => 'input'))}}
-                              {{ Form::textarea('html', $pages->html, $attributes = array('class'=>'form-control'))}}
-                              {{ $errors->addEdit->first('html') }}
-                          </section>  
+                  
+                        </div>         
+                        <div class="col-xs-12">
+                                {{ Form::label('html', 'html', array('class' => 'input'))}}
+                                {{ Form::textarea('html', $pages->html, $attributes = array('class'=>'form-control'))}}
+                                {{ $errors->addEdit->first('html') }}
                         </div>
                         <div class="col-xs-12">
                         {{ Form::submit('Submit',$attributes = array('class'=>'btn btn-primary') )}}
@@ -88,15 +89,47 @@
     @stop
     @section('scripts')
             <!-- PAGE RELATED PLUGIN(S) -->
-    <script src="{{asset('/back/js/plugin/jquery-form/jquery-form.min.js')}}"></script>
+    <script src="{{asset('assets/back/js/plugin/jquery-form/jquery-form.min.js')}}"></script>
 
+    <script src="{{asset('assets/back/js/plugin/ckeditor/ckeditor.js')}}"></script>
 
+    
     <script type="text/javascript">
-
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
-
         $(document).ready(function () {
             pageSetUp();
+            editor =   CKEDITOR.replace( 'html', { height: '380px', startupFocus : true} );
         })
+        $(document).on('click', '#imagesbu', function(event) {
+          event.preventDefault();
+                $("#images").toggle();
+
+        })
+        $(document).on('click', '.cke_button__image', function(event) {
+          event.preventDefault();
+          setTimeout(function(){ 
+          $(".imagesrem").remove();
+          html = '<div class="imagesrem">';
+              html += '<a href="#" id="imagesbu" >show Imges</a>';
+              html += '<ul class="" id="images" style="display: none;overflow-y: auto;height: 200px;">';
+            @foreach($images as $value)
+                html += '<li class="" >';
+                  html += '<p  onclick="copyToClipboard(\'/page/thumb_{{$value->image}}\')" style="width:40%;float: left;margin-top:10px;">';
+                      html += '<img class="imgF margin-10" src="/page/miny_{{$value->image}}" alt="">';
+                  html += '</p>';
+                html += '</li>';
+            @endforeach
+               html += '</ul>';
+           html += '</div>';
+          html += '</div>';
+          debugger;
+          $("#cke_114_uiElement").append(html);
+           }, 100);
+        });
+
+        function copyToClipboard(text) {
+          $("#cke_114_uiElement input").val(text);
+        }
+
     </script>
 @stop

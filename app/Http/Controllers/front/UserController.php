@@ -1,6 +1,6 @@
 <?php
-
 namespace App\Http\Controllers\front;
+
 use App\Models\common\User;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 
-class UserController extends Controller
-{
+class UserController extends Controller{
     public function auth(Request $request){
         if($request->isMethod('post')){
             $rules = [

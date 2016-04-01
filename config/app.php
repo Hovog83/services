@@ -155,6 +155,7 @@ return [
 
 
        Yajra\Datatables\DatatablesServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -219,10 +220,14 @@ return [
        
        'Images_up' => App\Helpers\Images_up::class,
 
+        
+
        /*
         * Custom Helper Classes
         */
-       'Menu'      => App\Helpers\Menu::class,
+       'Menu'   => App\Helpers\Menu::class,
+       'Layout' => App\Helpers\Layout::class,
+       
     ],
 
 ];

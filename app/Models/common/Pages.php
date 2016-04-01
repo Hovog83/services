@@ -12,7 +12,6 @@ class Pages extends Model{
 	{
 		return [
 				'title' => 'required|max:50|min:2',
-				'slug'  => 'required|max:10|unique:pages',
 				'order' => 'required|integer',
 				'html'  => 'required|min:10',
 		];
@@ -24,5 +23,7 @@ class Pages extends Model{
         	$sort->save();
         }
     }
-
+    public static function getPageBySlug($slug){
+          return self::where('slug', '=', $slug)->first()->toArray();
+    }
 }

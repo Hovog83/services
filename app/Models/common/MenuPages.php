@@ -43,4 +43,11 @@ class MenuPages extends Model{
 			$sort->save();
         }
     }
+
+    public function getMenu($menu_id = 1){
+      return self::with('getpages')->orderBy('order')->where('menu_id', '=', $menu_id)->get();
+    }
+    public function getpages(){
+        return $this->hasOne('App\Models\Common\Pages', 'id', 'page_id');
+    }
 }

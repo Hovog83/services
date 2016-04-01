@@ -10,7 +10,8 @@ class Image extends Model{
 	
 	public function setTable($tableName)
 	{
-		$this->table->$tableName;
+		$this->table = $tableName;
+        
 	}
 	public function sortImages($images) {
         foreach ($images as $key => $img) {
