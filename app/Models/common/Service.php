@@ -5,6 +5,10 @@ namespace App\Models\common;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Common\Image;
 
+use App\Models\Common\User;
+use App\Models\Common\Categorie;
+use App\Models\Common\Subcategory;
+
 class Service extends Model{
 
     protected $table = 'service';
@@ -35,11 +39,21 @@ class Service extends Model{
 	   if(empty($image)){
 		   $image = Image::where('service_id', '=', $id)->first();
 	   }
-
 	   if(empty($image)){
 	 	  return $image  = new Image;
 	   }
 	   return $image;
-      // return self::where('subCat_id', '=', $subCatID)->orderBy('order')->get();
+	}
+	public function getService($id){
+	  return self::with('getcat')->with('getSubCat')->with('getUser')->where('id', '=', $id)->first()->toArray();
+	}
+	public function getcat(){
+	    return $this->hasOne('App\Models\Common\Categorie', 'id', 'cat_id');
+	}	
+	public function getSubCat(){
+	    return $this->hasOne('App\Models\Common\Subcategory', 'id', 'subCat_id');
+	}	
+	public function getUser(){
+	    return $this->hasOne('App\Models\Common\User', 'id', 'user_id');
 	}
 }

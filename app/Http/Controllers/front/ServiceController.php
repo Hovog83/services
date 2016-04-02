@@ -15,17 +15,19 @@ use App\Models\Common\Service;
 class ServiceController extends Controller{
 
     public function index($lg,$id=null){
-        $categorie   = new Categorie();
-        $subcategory = new Subcategory();
-        $service = Service::find($id);
-
-        $view = 'front.service.service';
-        $data = array(
-                "categorie"   => $categorie,
-                "subcategory" => $subcategory,
-                "service"     => $service,
+        $categorie    = new Categorie();
+        $subcategory  = new Subcategory();
+        $serviceModel = new Service();
+        $service      = $serviceModel->getService($id);
+        // echo "<pre>";
+        // print_r($service);die;
+        $view         = 'front.service.service';
+        $data         = array(
+                "categorie"    => $categorie,
+                "serviceModel" => $serviceModel,
+                "subcategory"  => $subcategory,
+                "service"      => $service,
             );
        return view($view,$data);
     }
 }
-

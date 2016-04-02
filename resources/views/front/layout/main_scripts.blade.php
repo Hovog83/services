@@ -11,3 +11,4 @@
 <script src="{{asset('/assets/front/js/jquery.themepunch.revolution.min.js')}}"></script>
 <script src="{{asset('/assets/front/js/jquery.themepunch.tools.min.js')}}"></script>
 <script src="{{asset('/assets/front/js/gmap3.min.js')}}"></script>
+<script src="{{asset('/assets/front/js/responsive-tabs.js')}}"></script>
