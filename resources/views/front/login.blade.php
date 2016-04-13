@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="/{{ Lang::getLocale() }}/auth">
                         {!! csrf_field() !!}
 
                         @if(session('message'))

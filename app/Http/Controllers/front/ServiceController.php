@@ -19,13 +19,14 @@ class ServiceController extends Controller{
         $subcategory  = new Subcategory();
         $serviceModel = new Service();
         $service      = $serviceModel->getService($id);
-        // echo "<pre>";
-        // print_r($service);die;
+        $serviceImges = $service->getServiceImages()->toArray();
+        $service      =  $service->toArray();
         $view         = 'front.service.service';
         $data         = array(
                 "categorie"    => $categorie,
                 "serviceModel" => $serviceModel,
                 "subcategory"  => $subcategory,
+                "serviceImges" => $serviceImges,
                 "service"      => $service,
             );
        return view($view,$data);

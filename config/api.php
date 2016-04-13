@@ -15,6 +15,7 @@ return [
     'route' => [
         'auth',
         'pages',
+        'classifieds',
         'services',
         'service',
     ],

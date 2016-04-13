@@ -11,8 +11,23 @@
                 <div class="container">
 
                   <!-- Start Utility-Nav-->
+
                   <nav class="utility-nav clearfix">
                     <ul class="utility-user custom-list">
+                    @if(!empty(Layout::getUserAuth()))
+                    <li id="">
+                      <a href="/account"  class="btn btn-default">
+                        <i class="fa fa-user"></i>
+                        <span>{{trans('interface.my_account')}}</span>
+                      </a>
+                    </li>                    
+                    <li id="">
+                      <a href="/classifieds"  class="btn btn-default">
+                        <i class="fa fa-plus"></i>
+                        <span>{{trans('interface.classifieds')}}</span>
+                      </a>
+                    </li>
+                    @else
                       <li id="login">
                         <a href="#" id="login-link" class="btn btn-default">
                           <i class="fa fa-power-off"></i>
@@ -41,6 +56,7 @@
                           <span>Register</span>
                         </a>
                       </li>
+                    @endif
                     </ul>
 
                     <div class="utility-social">
@@ -55,7 +71,6 @@
                     </div>
                   </nav>
                   <!-- End Utility Nav -->
-                  
                   <!-- Start Search Nav -->
                   <nav class="search-nav">
                     <button class="advanced-search-button">

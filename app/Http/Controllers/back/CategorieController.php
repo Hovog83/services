@@ -8,6 +8,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
 use Yajra\Datatables\Datatables;
+use App\Models\Common\Language;
+
 class CategorieController extends Controller{
     public function index(){
         return view('back.categorie.index');
@@ -27,11 +29,17 @@ class CategorieController extends Controller{
 	                       ->withErrors($validator,'addEdit')
 	                       ->withInput();
 	        }else{
-                 $categories->name   = $request->name;
-                 $categories->icone  = $request->icone;
-                 $categories->order  = $request->order;
-                 $categories->status = $request->status;
+                $name = preg_replace('/[^a-z-0-9?]+/iu', '_', $request->name);
+                $language = array($name => $request->name);
+                Language::insertKey($language,$id);
+                 
+                 $categories->codeTitle = $name;
+                 $categories->name      = $request->name;
+                 $categories->icone     = $request->icone;
+                 $categories->order     = $request->order;
+                 $categories->status    = $request->status;
          	  	 $categories->save();
+
 	        }
 	        return redirect('admin/categorie');
         }

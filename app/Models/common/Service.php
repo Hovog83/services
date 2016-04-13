@@ -45,7 +45,7 @@ class Service extends Model{
 	   return $image;
 	}
 	public function getService($id){
-	  return self::with('getcat')->with('getSubCat')->with('getUser')->where('id', '=', $id)->first()->toArray();
+	  return self::with('getcat')->with('getSubCat')->with('getUser')->where('id', '=', $id)->first();
 	}
 	public function getcat(){
 	    return $this->hasOne('App\Models\Common\Categorie', 'id', 'cat_id');

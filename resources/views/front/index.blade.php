@@ -32,7 +32,7 @@
               <a href="/services/{{$value["id"]}}">
                 <div class="category-icon"><i class="{{$value["icone"]}}"></i></div>
                 <div class="category-title">
-                  <h5>{{$value["name"]}}</h5>
+                  <h5>{{trans('interface.'.$value["codeTitle"])}}</h5>
                   <strong class="count">(6)</strong>
                 </div>
               </a>
@@ -41,7 +41,7 @@
               <ul class="custom-list">
                 @foreach($value["get_sub"] as $key => $val)
                 <li>
-                <a href="/services/{{$value["id"]}}/{{$val["id"]}}" title=""><i class="{{$val["icone"]}}"></i>{{$val["name"]}}</a>
+                <a href="/services/{{$value["id"]}}/{{$val["id"]}}" title=""><i class="{{$val["icone"]}}"></i>{{trans('interface.'.$val["codeTitle"])}}</a>
                 </li>
                 @endforeach
               </ul>

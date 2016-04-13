@@ -12,6 +12,7 @@ use App\Models\Common\Categorie;
 use App\Models\Common\Subcategory;
 use App\Models\Common\Image;
 use App\Helpers\Images_up;
+use App\Models\Common\Language;
 
 class ServiceController extends Controller{
     public function index(){
@@ -45,13 +46,22 @@ class ServiceController extends Controller{
 	        }else{
                     $up =  new Images_up();
                     $images = $up->upload();
+
+                    $title = preg_replace('/[^a-z-0-9?]+/iu', '_', $request->title);
+                    $language = array($title => $request->title);
+                    Language::insertKey($language,$id);
+
                     $services->title       = $request->title;
+                    $services->codeTitle   = $title;
                     $services->status      = $request->status;
                     $services->order       = $request->order;
                     $services->description = $request->description;
                     $services->cat_id      = $request->cat_id;
                     $services->subCat_id   = $request->subCat_id;
                     $services->save();
+
+
+
                     foreach ($images as $key => $value) {
                         $image_model = new Image();
                         $image_model->service_id = $services->id;

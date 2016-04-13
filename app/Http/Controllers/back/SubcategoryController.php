@@ -8,6 +8,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
 use Yajra\Datatables\Datatables;
+use App\Models\Common\Language;
+
 class SubcategoryController extends Controller{
     public function index(){
         return view('back.subcategory.index');
@@ -31,12 +33,19 @@ class SubcategoryController extends Controller{
 	                       ->withErrors($validator,'addEdit')
 	                       ->withInput();
 	        }else{
+                
+                $name = preg_replace('/[^a-z-0-9?]+/iu', '_', $request->name);
+                $language = array($name => $request->name);
+                Language::insertKey($language,$id);
+
                  $subcategory->name   = $request->name;
+                 $subcategory->codeTitle = $name;
                  $subcategory->cat_id = $request->cat_id;
                  $subcategory->icone  = $request->icone; 
                  $subcategory->order  = $request->order;
                  $subcategory->status = $request->status;
          	  	 $subcategory->save();
+
 	        }
 	        return redirect('admin/subcategory');
         }

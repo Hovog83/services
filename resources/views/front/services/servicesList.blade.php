@@ -7,7 +7,7 @@
         <div class="page-content col-lg-8 col-md-8 col-sm-8">
           <!-- Start Company-List-Header -->
           <div class="company-list-header clearfix">
-            <h5 class="title"> {{$categorie->name }} / {{ $subcategory->name }} </h5>
+            <h5 class="title"> {{trans('interface.'.$categorie->codeTitle)}} / {{trans('interface.'.$subcategory->codeTitle)}}</h5>
             @include('front.services.pag', ['paginator' => $serviceList])
           </div>
           <!-- End Company-List-Header -->

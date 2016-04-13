@@ -245,6 +245,42 @@ Route::group([
             'uses' => 'ServiceController@index',
             'as'   => 'front.page.index'
         ]);
+
+
+
+
+    /*AccountController*/
+        Route::get('classifieds', [
+            'uses' => "AccountController@index",
+            'as'   => 'front.service.index'
+        ]);
+        /*AccountController  Edit*/
+        Route::any('classifieds/edit/{id}', [
+            'uses' => "AccountController@addEdit",
+            'as'   => 'front.service.edit'
+        ]);       
+        /*AccountController create */
+        Route::any('classifieds/create', [
+            'uses' => "AccountController@addEdit",
+            'as'   => 'front.service.create'
+        ]);   
+        Route::any('classifieds/anyData/{type?}', [
+            'uses' => "AccountController@anyData",
+            'as'   => 'front.service.create'
+        ]);   
+        Route::get('classifieds/delete/{id}', ['uses' => "AccountController@delete"]);
+        Route::any('classifieds/sortImages', ['uses' => "AccountController@sortImages"]);
+        Route::any('classifieds/deleteImages/{id}', ['uses' => "AccountController@deleteImages"]);
+        Route::any('classifieds/setMainImages/{id}/{services}', ['uses' => "AccountController@setMainImages"]);
+        Route::any('classifieds/getSubCat/{id?}', ['uses' => "AccountController@getSubCat"]);
+    // AccountController catEnD
+
+
+
+
+
+
+
     Route::get('{action}/{a?}',  function($lang){
         return redirect($lang . '/');
     });
@@ -253,6 +289,11 @@ Route::group([
             'as'   => 'front.index'
         ]);
     Route::any('/admin', ['uses' => 'IndexController@index']);
+
+
+
+
+
 
 });
 
