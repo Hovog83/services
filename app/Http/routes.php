@@ -90,7 +90,7 @@ Route::group([
                 Route::any('service/deleteImages/{id}', ['uses' => "ServiceController@deleteImages"]);
                 Route::any('service/setMainImages/{id}/{services}', ['uses' => "ServiceController@setMainImages"]);
                 Route::any('service/getSubCat/{id?}', ['uses' => "ServiceController@getSubCat"]);
-            // ServiceController catEnD
+            // ServiceController catEnD 
 
                     Route::any('service/type/{approved}', [
                         'uses' => "ServiceController@type",
@@ -272,15 +272,8 @@ Route::group([
         Route::any('classifieds/sortImages', ['uses' => "AccountController@sortImages"]);
         Route::any('classifieds/deleteImages/{id}', ['uses' => "AccountController@deleteImages"]);
         Route::any('classifieds/setMainImages/{id}/{services}', ['uses' => "AccountController@setMainImages"]);
-        Route::any('classifieds/getSubCat/{id?}', ['uses' => "AccountController@getSubCat"]);
+        Route::any('service/getSubCat/{id?}', ['uses' => "AccountController@getSubCat"]);
     // AccountController catEnD
-
-
-
-
-
-
-
     Route::get('{action}/{a?}',  function($lang){
         return redirect($lang . '/');
     });
@@ -289,12 +282,6 @@ Route::group([
             'as'   => 'front.index'
         ]);
     Route::any('/admin', ['uses' => 'IndexController@index']);
-
-
-
-
-
-
 });
 
 /*

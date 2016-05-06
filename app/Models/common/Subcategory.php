@@ -13,7 +13,7 @@ class Subcategory extends Model{
 		return [
 				'name'   => 'required|max:50|min:2',
 				'icone'  => 'required|max:30',
-				'cat_id'  => 'required|integer',
+				'cat_id' => 'required|integer',
 				'order'  => 'required|integer',
 				'status' => 'required',
 		];
@@ -22,7 +22,7 @@ class Subcategory extends Model{
 	public static function getSubcategoryByCatIdForService($id){
 		$scat = [];
         $subcategory = self::where('status', '=', "ACTIVE")->where('cat_id', '=', $id)->select('id', 'name')->get();
-         foreach ($subcategory->toArray() as $key => $value) {
+        foreach ($subcategory->toArray() as $key => $value) {
                 $scat[$value["id"]] = $value["name"];
         }
         return $scat;

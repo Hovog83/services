@@ -48,7 +48,7 @@ class AccountController extends Controller{
             }
             if ($request->isMethod('post')) {
                 $rules = Service::rules();
-                $rules['images.*'] = 'image|max:2000';
+                // $rules['images.*'] = 'image|max:2000';
               $validator = Validator::make($request->all(),$rules);
                 if ($validator->fails()) {
                     return redirect($url)->withErrors($validator,"addEdit")->withInput();
@@ -60,13 +60,14 @@ class AccountController extends Controller{
                         // $language = array($title => $request->title);
                         // Language::insertKey($language,$id);
 
-                        $services->title       = $request->title;
-                        // $services->codeTitle   = $title;
-                        $services->status      = $request->status;
-                        $services->order       = $request->order;
-                        $services->description = $request->description;
-                        $services->cat_id      = $request->cat_id;
-                        $services->subCat_id   = $request->subCat_id;
+                        $services->title        = $request->title;
+                        $services->user_id      = Auth::user()->id;
+                        // $services->codeTitle = $title;
+                        $services->status       = "NEW";
+                        $services->order        = "1";
+                        $services->description  = $request->description;
+                        $services->cat_id       = $request->cat_id;
+                        $services->subCat_id    = $request->subCat_id;
                         $services->save();
 
                         foreach ($images as $key => $value) {
@@ -86,7 +87,7 @@ class AccountController extends Controller{
             Service::find($id)->delete();
              return redirect('classifieds/');
         }   
-        public function getSubCat($id = false ) {
+        public function getSubCat($lg,$id = false ) {
             $subcategory = array();
             if($id){
                 $subcategory = Subcategory::getSubcategoryByCatIdForService($id);

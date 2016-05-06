@@ -18,8 +18,8 @@ class Service extends Model{
 	{
 		return [
 				'title'       => 'required|max:50|min:2',
-				'status'      => 'required|max:30',
-				'order'       => 'required|integer',
+				'status'      => 'max:30',
+				'order'       => 'integer',
 				'description' => 'required|min:10',
 				'cat_id'      => 'required|integer',
 				'subCat_id'   => 'required|integer',
