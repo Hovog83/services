@@ -18,16 +18,5 @@ class IndexController extends Controller
         return view('front.index',["catLIst"=> $catLIst]);
     }
 
-   /* public function login(Request $request){
-        $salt        = User::getSaltByEmail($request->email);
-        $credentials = [
-            'role'     => User::ROLE_USER,
-            'email'    => $request->email,
-            'password' => $request->password . $salt
-        ];
-        if (Auth::attempt($credentials, true)) {
-            return redirect('back/admin');
-        }
-    }*/
 }
 
